@@ -1,4 +1,4 @@
-# 365PowerSheel
+# 365PowerShell
 Powershell to do all 365 stuff
 
 Application source for all powershell GUI and functions
