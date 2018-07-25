@@ -1,4 +1,4 @@
-﻿# Script to connect to different Microsoft services
+# Script to connect to different Microsoft services
 #
 # Author: Jacob Shand & Benjamin Western
 # Date: 24/07/2018
@@ -6,11 +6,11 @@
 
 # Link files to this script (master
 # Same folder, called functions.ps1
-. C:\Users\User\Documents\GitHub\365PowerShell\activityAlerts.ps1
-. C:\Users\User\Documents\GitHub\365PowerShell\serviceConnectors.ps1
+#. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\activityAlerts.ps1
+#. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\serviceConnectors.ps1
 # Prompt user for credential to use for services
  
-#$globalCred = "null"
+$Global:globalCred
 
 # Set global error pref so we can catch errors when logging in
 $Global:ErrorActionPreference='stop'
@@ -47,90 +47,97 @@ Add-Type -AssemblyName System.Windows.Forms
 
 #region begin GUI{ 
 
-$ONGCPowerShell                  = New-Object system.Windows.Forms.Form
-$ONGCPowerShell.ClientSize       = '900,300'
-$ONGCPowerShell.text             = "ONGC Systems Cloud Management"
-$ONGCPowerShell.BackColor        = "#ffffff"
-$ONGCPowerShell.TopMost          = $true
+$MainForm                        = New-Object system.Windows.Forms.Form
+$MainForm.ClientSize             = '400,400'
+$MainForm.text                   = "Form"
+$MainForm.BackColor              = "#ffffff"
+$MainForm.TopMost                = $false
 
-$SharePoint                      = New-Object system.Windows.Forms.Button
-$SharePoint.BackColor            = "#4aa8e2"
-$SharePoint.text                 = "SharePoint"
-$SharePoint.width                = 250
-$SharePoint.height               = 50
-$SharePoint.location             = New-Object System.Drawing.Point(110,30)
-$SharePoint.Font                 = 'Microsoft Sans Serif,10,style=Bold'
+$SharePointButton                = New-Object system.Windows.Forms.Button
+$SharePointButton.BackColor      = "#4a90e2"
+$SharePointButton.text           = "SharePoint"
+$SharePointButton.width          = 159
+$SharePointButton.height         = 67
+$SharePointButton.location       = New-Object System.Drawing.Point(18,23)
+$SharePointButton.Font           = 'Microsoft Sans Serif,10,style=Bold'
 
-$Skype                           = New-Object system.Windows.Forms.Button
-$Skype.BackColor                 = "#4aa8e2"
-$Skype.text                      = "Skype"
-$Skype.width                     = 250
-$Skype.height                    = 50
-$Skype.location                  = New-Object System.Drawing.Point(500,30)
-$Skype.Font                      = 'Microsoft Sans Serif,10,style=Bold'
+$AzureButton                     = New-Object system.Windows.Forms.Button
+$AzureButton.BackColor           = "#4a90e2"
+$AzureButton.text                = "Azure"
+$AzureButton.width               = 159
+$AzureButton.height              = 67
+$AzureButton.location            = New-Object System.Drawing.Point(219,23)
+$AzureButton.Font                = 'Microsoft Sans Serif,10,style=Bold'
 
-$AdminPortal                     = New-Object system.Windows.Forms.Button
-$AdminPortal.BackColor           = "#4aa8e2"
-$AdminPortal.text                = "Admin Portal"
-$AdminPortal.width               = 250
-$AdminPortal.height              = 50
-$AdminPortal.location            = New-Object System.Drawing.Point(110,90)
-$AdminPortal.Font                = 'Microsoft Sans Serif,10,style=Bold'
+$AdminPortalButton               = New-Object system.Windows.Forms.Button
+$AdminPortalButton.BackColor     = "#4a90e2"
+$AdminPortalButton.text          = "Admin Portal"
+$AdminPortalButton.width         = 159
+$AdminPortalButton.height        = 67
+$AdminPortalButton.location      = New-Object System.Drawing.Point(219,119)
+$AdminPortalButton.Font          = 'Microsoft Sans Serif,10,style=Bold'
 
-$SecurityCentre                  = New-Object system.Windows.Forms.Button
-$SecurityCentre.BackColor        = "#4aa8e2"
-$SecurityCentre.text             = "Security Centre"
-$SecurityCentre.width            = 250
-$SecurityCentre.height           = 50
-$SecurityCentre.location         = New-Object System.Drawing.Point(500,91)
-$SecurityCentre.Font             = 'Microsoft Sans Serif,10,style=Bold'
+$SecurityButton                  = New-Object system.Windows.Forms.Button
+$SecurityButton.BackColor        = "#4a90e2"
+$SecurityButton.text             = "Security Centre"
+$SecurityButton.width            = 159
+$SecurityButton.height           = 67
+$SecurityButton.location         = New-Object System.Drawing.Point(20,120)
+$SecurityButton.Font             = 'Microsoft Sans Serif,10,style=Bold'
 
-$Teams                           = New-Object system.Windows.Forms.Button
-$Teams.BackColor                 = "#4aa8e2"
-$Teams.text                      = "Teams"
-$Teams.width                     = 250
-$Teams.height                    = 50
-$Teams.location                  = New-Object System.Drawing.Point(110,150)
-$Teams.Font                      = 'Microsoft Sans Serif,10,style=Bold'
+$SkypeButton                     = New-Object system.Windows.Forms.Button
+$SkypeButton.BackColor           = "#4a90e2"
+$SkypeButton.text                = "Skype"
+$SkypeButton.width               = 159
+$SkypeButton.height              = 67
+$SkypeButton.location            = New-Object System.Drawing.Point(20,312)
+$SkypeButton.Font                = 'Microsoft Sans Serif,10,style=Bold'
 
-$Azure                           = New-Object system.Windows.Forms.Button
-$Azure.BackColor                 = "#4aa8e2"
-$Azure.text                      = "Azure"
-$Azure.width                     = 250
-$Azure.height                    = 50
-$Azure.location                  = New-Object System.Drawing.Point(500,151)
-$Azure.Font                      = 'Microsoft Sans Serif,10,style=Bold'
+$MainFormButton                  = New-Object system.Windows.Forms.Button
+$MainFormButton.BackColor        = "#4a90e2"
+$MainFormButton.text             = "Exit"
+$MainFormButton.width            = 159
+$MainFormButton.height           = 67
+$MainFormButton.location         = New-Object System.Drawing.Point(219,311)
+$MainFormButton.Font             = 'Microsoft Sans Serif,10,style=Bold'
 
-$Exchange                        = New-Object system.Windows.Forms.Button
-$Exchange.BackColor              = "#4aa8e2"
-$Exchange.text                   = "Exchange"
-$Exchange.width                  = 250
-$Exchange.height                 = 50
-$Exchange.location               = New-Object System.Drawing.Point(110,210)
-$Exchange.Font                   = 'Microsoft Sans Serif,10,style=Bold'
+$TeamsButton                     = New-Object system.Windows.Forms.Button
+$TeamsButton.BackColor           = "#4a90e2"
+$TeamsButton.text                = "Microsoft Teams"
+$TeamsButton.width               = 159
+$TeamsButton.height              = 67
+$TeamsButton.location            = New-Object System.Drawing.Point(219,215)
+$TeamsButton.Font                = 'Microsoft Sans Serif,10,style=Bold'
 
-$ExitMain                        = New-Object system.Windows.Forms.Button
-$ExitMain.BackColor              = "#4aa8e2"
-$ExitMain.text                   = "Exit"
-$ExitMain.width                  = 250
-$ExitMain.height                 = 50
-$ExitMain.location               = New-Object System.Drawing.Point(500,209)
-$ExitMain.Font                   = 'Microsoft Sans Serif,10,style=Bold'
-$ExitMain.ForeColor              = "#000000"
+$ExchangeButton                  = New-Object system.Windows.Forms.Button
+$ExchangeButton.BackColor        = "#4a90e2"
+$ExchangeButton.text             = "Exchange Online"
+$ExchangeButton.width            = 159
+$ExchangeButton.height           = 67
+$ExchangeButton.location         = New-Object System.Drawing.Point(18,215)
+$ExchangeButton.Font             = 'Microsoft Sans Serif,10,style=Bold'
 
-$ONGCPowerShell.controls.AddRange(@($SharePoint,$Skype,$AdminPortal,$SecurityCentre,$Teams,$Azure,$Exchange,$ExitMain))
+$MainForm.controls.AddRange(@($SharePointButton,$AzureButton,$AdminPortalButton,$SecurityButton,$SkypeButton,$MainFormButton,$TeamsButton,$ExchangeButton))
 
 #region gui events {
-$SharePoint.Add_MouseClick({ sharepointLogin })
-$Skype.Add_MouseClick({ skypeLogin })
-$AdminPortal.Add_MouseClick({ adminLogin })
-$SecurityCentre.Add_MouseClick({ activityAlerts jshand96@hotmail.com  })
-$Teams.Add_MouseClick({ teamsLogin })
-$Azure.Add_MouseClick({ azureLogin })
-$Exchange.Add_MouseClick({ exchangeLogin })
-$ExitMain.Add_MouseClick({ $ONGCPowerShell.Close() })
-$ONGCPowerShell.Add_MouseDoubleClick({  })
-$ONGCPowerShell.Add_Load({$globalCred = Get-Credential})
+$MainForm.Add_MouseDoubleClick({  })
+$MainForm.Add_Load({ $Global:globalCred = Get-Credential })
+$SharePointButton.Add_MouseClick({  })
+$SharePointButton.Add_MouseHover({  })
+$AzureButton.Add_MouseClick({  })
+$AzureButton.Add_MouseHover({  })
+$SecurityButton.Add_MouseClick({  })
+$SecurityButton.Add_MouseHover({  })
+$AdminPortalButton.Add_MouseClick({  })
+$AdminPortalButton.Add_MouseHover({  })
+$ExchangeButton.Add_MouseClick({  })
+$ExchangeButton.Add_MouseHover({  })
+$TeamsButton.Add_MouseClick({  })
+$TeamsButton.Add_MouseHover({  })
+$SkypeButton.Add_MouseClick({  })
+$SkypeButton.Add_MouseHover({  })
+$MainFormButton.Add_MouseClick({ $MainForm.Close() })
+$MainFormButton.Add_MouseHover({  })
 #endregion events }
 
 #endregion GUI }
@@ -138,4 +145,4 @@ $ONGCPowerShell.Add_Load({$globalCred = Get-Credential})
 
 #Write your logic code here
 
-[void]$ONGCPowerShell.ShowDialog()
+[void]$MainForm.ShowDialog()
