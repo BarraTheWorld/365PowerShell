@@ -6,8 +6,8 @@
 
 # Link files to this script (master
 # Same folder, called functions.ps1
-. "\activityAlerts.ps1"
-. "\serviceConnectors.ps1"
+# . "\activityAlerts.ps1"
+# . "\serviceConnectors.ps1"
 # Prompt user for credential to use for services
  
 #$globalCred = "null"
@@ -19,22 +19,22 @@ $Global:ErrorActionPreference='stop'
 try { 
     import-module msonline
 } catch {
-    install-module msonline
-    import-module msonline
+    install-module msonline -Force
+    import-module msonline -Force
 }
 
 try { 
     import-module AzureAD
 } catch {
-    install-module AzureAD
-    import-module AzureAD
+    install-module AzureAD -Force
+    import-module AzureAD -Force
 }
 
 try { 
     import-module AzureRM
 } catch {
-    install-module AzureRM
-    import-module AzureRM
+    install-module AzureRM -Force
+    import-module AzureRM -Force
 }
 
 <# This form was created using POSHGUI.com  a free online gui designer for PowerShell
