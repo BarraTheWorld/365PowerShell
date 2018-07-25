@@ -1,4 +1,4 @@
-Function exchangeOnline {
+Function exchangeLogin {
     try {
         $exchangeSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/?proxyMethod=RPS -Credential $globalCred -Authentication Basic
         Import-PSSession $exchangeSession
@@ -47,7 +47,7 @@ Function securityLogin {
 }
 # Connect to Skype for Business Online Portal using given credentials
 # CMDLet not working yet
-Function skypeOnline {
+Function skypeLogin {
     try {
         Connect-MsolService -Credential $globalCred
         $skypeSession = New-csonlinesession -credential $globalCred
@@ -57,7 +57,7 @@ Function skypeOnline {
     }  
 }
 
-Function azureAD {
+Function azureLogin {
     try {
         Connect-AzureAD -Credential $globalCred
         Write-Host -ForegroundColor green "Successfully connected to the Azure AD service"

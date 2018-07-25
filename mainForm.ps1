@@ -121,15 +121,13 @@ $ExitMain.ForeColor              = "#000000"
 $ONGCPowerShell.controls.AddRange(@($SharePoint,$Skype,$AdminPortal,$SecurityCentre,$Teams,$Azure,$Exchange,$ExitMain))
 
 #region gui events {
-$SharePoint.Add_MouseClick({ securityLogin
-
-})
-$Skype.Add_MouseClick({  })
-$AdminPortal.Add_MouseClick({  })
+$SharePoint.Add_MouseClick({ sharepointLogin })
+$Skype.Add_MouseClick({ skypeLogin })
+$AdminPortal.Add_MouseClick({ adminLogin })
 $SecurityCentre.Add_MouseClick({ activityAlerts jshand96@hotmail.com  })
-$Teams.Add_MouseClick({  })
-$Azure.Add_MouseClick({  })
-$Exchange.Add_MouseClick({  })
+$Teams.Add_MouseClick({ teamsLogin })
+$Azure.Add_MouseClick({ azureLogin })
+$Exchange.Add_MouseClick({ exchangeLogin })
 $ExitMain.Add_MouseClick({ $ONGCPowerShell.Close() })
 $ONGCPowerShell.Add_MouseDoubleClick({  })
 $ONGCPowerShell.Add_Load({$globalCred = Get-Credential})
