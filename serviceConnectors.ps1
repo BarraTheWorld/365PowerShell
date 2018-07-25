@@ -1,7 +1,10 @@
 Function exchangeOnline {
-    $exchangeSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/?proxyMethod=RPS -Credential $globalCred -Authentication Basic
-    Import-PSSession $exchangeSession
-    write-host -foregroundcolor green "Successfully connected to Exchange online!"
+    try {
+        $exchangeSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/?proxyMethod=RPS -Credential $globalCred -Authentication Basic
+        Import-PSSession $exchangeSession
+        write-host -foregroundcolor green "Successfully connected to Exchange online!"
+    } catch {
+        write-host -foregroundcolor red "Failed to connect to Exchange online!"
 }
 
 # Connect to O365 admin portal using given credential
