@@ -7,7 +7,7 @@
 # Link files to this script (master
 # Same folder, called functions.ps1
 . "\activityAlerts.ps1"
-. "\securityLogin.ps1"
+. "\serviceConnectors.ps1"
 # Prompt user for credential to use for services
  
 #$globalCred = "null"
