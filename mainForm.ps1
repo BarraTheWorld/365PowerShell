@@ -8,6 +8,7 @@
 # Same folder, called functions.ps1
 #. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\activityAlerts.ps1
 #. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\serviceConnectors.ps1
+
 # Prompt user for credential to use for services
  
 $Global:globalCred
