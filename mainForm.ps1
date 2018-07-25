@@ -122,21 +122,24 @@ $MainForm.controls.AddRange(@($SharePointButton,$AzureButton,$AdminPortalButton,
 #region gui events {
 $MainForm.Add_MouseDoubleClick({  })
 $MainForm.Add_Load({ $Global:globalCred = Get-Credential })
-$SharePointButton.Add_MouseClick({  })
+$SharePointButton.Add_MouseClick({ sharepointLogin })
 $SharePointButton.Add_MouseHover({  })
-$AzureButton.Add_MouseClick({  })
+$AzureButton.Add_MouseClick({ azureLogin })
 $AzureButton.Add_MouseHover({  })
-$SecurityButton.Add_MouseClick({  })
+$SecurityButton.Add_MouseClick({ securityLogin })
 $SecurityButton.Add_MouseHover({  })
-$AdminPortalButton.Add_MouseClick({  })
+$AdminPortalButton.Add_MouseClick({ adminLogin })
 $AdminPortalButton.Add_MouseHover({  })
-$ExchangeButton.Add_MouseClick({  })
+$ExchangeButton.Add_MouseClick({ exchangeLogin })
 $ExchangeButton.Add_MouseHover({  })
-$TeamsButton.Add_MouseClick({  })
+$TeamsButton.Add_MouseClick({ teamsLogin })
 $TeamsButton.Add_MouseHover({  })
-$SkypeButton.Add_MouseClick({  })
+$SkypeButton.Add_MouseClick({ skypeLogin })
 $SkypeButton.Add_MouseHover({  })
-$MainFormButton.Add_MouseClick({ $MainForm.Close() })
+$MainFormButton.Add_MouseClick({ 
+    Get-PSSession | Remove-PSSession 
+    $MainForm.Close() 
+})
 $MainFormButton.Add_MouseHover({  })
 #endregion events }
 
