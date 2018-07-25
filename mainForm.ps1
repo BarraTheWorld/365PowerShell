@@ -6,8 +6,8 @@
 
 # Link files to this script (master
 # Same folder, called functions.ps1
-# . "\activityAlerts.ps1"
-# . "\serviceConnectors.ps1"
+. C:\Users\User\Documents\GitHub\365PowerShell\activityAlerts.ps1
+. C:\Users\User\Documents\GitHub\365PowerShell\serviceConnectors.ps1
 # Prompt user for credential to use for services
  
 #$globalCred = "null"

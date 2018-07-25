@@ -5,6 +5,7 @@ Function exchangeLogin {
         write-host -foregroundcolor green "Successfully connected to Exchange online!"
     } catch {
         write-host -foregroundcolor red "Failed to connect to Exchange online!"
+    }
 }
 
 # Connect to O365 admin portal using given credential
