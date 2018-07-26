@@ -20,17 +20,22 @@
 $Global:globalCred
 
 ## Variables
-$savedCreds=$false                      ## false = manually enter creds, True = from file
-$credPath = "${env\userpath}\OneDrive\Documents\PowerShell"   ## local file with credentials if required
+$credPath = "${env:\userprofile}\OneDrive\Documents\PowerShell\Global.Cred"   ## local file with credentials if required
+
+#Check if Cred File exists in location - Prompts user if it doesn't and creates it
+#Else just assigns the $Global:globalCred as the Cred File
+Function checkCredentials{
 
 ## Get tenant login credentials
-if ($savedcreds) {
+if (Test-Path -Path $credPath) {
+
     ## Get creds from local file
-    $Global:globalCred =import-clixml -path $credPath
+    $Global:globalCred = import-clixml -Path $credPath
 }
 else {
     ## Get creds manually
-    $Global:globalCred=get-credential 
+    $Global:globalCred = get-credential | Export-Clixml -Path $credPath
+}
 }
 
 # Set global error pref so we can catch errors when logging in
@@ -142,7 +147,7 @@ $MainForm.controls.AddRange(@($SharePointButton,$AzureButton,$AdminPortalButton,
 
 #region gui events {
 $MainForm.Add_MouseDoubleClick({  })
-$MainForm.Add_Load({ $Global:globalCred = Get-Credential })
+$MainForm.Add_Load({ checkCredentials })
 $SharePointButton.Add_MouseClick({ sharepointLogin })
 $SharePointButton.Add_MouseHover({  })
 $AzureButton.Add_MouseClick({ azureLogin })
