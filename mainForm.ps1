@@ -9,6 +9,8 @@
 #. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\activityAlerts.ps1
 #. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\serviceConnectors.ps1
 
+. C:\Users\User\Documents\GitHub\365PowerShell\serviceConnectors.ps1
+
 # Prompt user for credential to use for services
  
 $Global:globalCred
