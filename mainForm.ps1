@@ -9,9 +9,22 @@
 #. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\activityAlerts.ps1
 #. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\serviceConnectors.ps1
 
-# Prompt user for credential to use for services
- 
+# Define Global credential Variable 
 $Global:globalCred
+
+## Variables
+$savedCreds=$false                      ## false = manually enter creds, True = from file
+$credPath = "${env\userpath}\OneDrive\Documents\PowerShell"   ## local file with credentials if required
+
+## Get tenant login credentials
+if ($savedcreds) {
+    ## Get creds from local file
+    $Global:globalCred =import-clixml -path $credPath
+}
+else {
+    ## Get creds manually
+    $Global:globalCred=get-credential 
+}
 
 # Set global error pref so we can catch errors when logging in
 $Global:ErrorActionPreference='stop'
