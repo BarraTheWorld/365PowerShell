@@ -1,6 +1,6 @@
-﻿# Script to apply Full Access permission of one user to every mailbox in Exchange
+﻿# Script to apply Send as Access permission for one user to every mailbox in Exchange
 # Done for Eco SUperfoods
-# WARNING: THIS WILL PROVIDE FULL ACCESS TO EVERYONE FOR THIS ONE USER
+# WARNING: THIS WILL PROVIDE SEND AS ACCESS TO EVERYONE FOR THIS ONE USER
 
 Function globalSendAs {
     Param($email)
