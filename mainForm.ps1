@@ -6,15 +6,12 @@
 
 # Link files to this script (master
 # Same folder, called functions.ps1
-#. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\activityAlerts.ps1
-#. C:\Users\%username%\OneDrive\Documents\WindowsPowerShell\serviceConnectors.ps1
-
-# Prompt user for credential to use for services
- 
-# Define Global credential Variable 
-$Global:globalCred
+#. ${env:\userprofile}\OneDrive\Documents\PowerShell\activityAlerts.ps1
+#. ${env:\userprofile}\OneDrive\Documents\PowerShell\serviceConnectors.ps1
 
 ## Variables
+# Define Global credential Variable 
+$Global:globalCred
 $credPath = "${env:\userprofile}\OneDrive\Documents\PowerShell\Global.Cred"   ## local file with credentials if required
 
 #Check if Cred File exists in location - Prompts user if it doesn't and creates it
