@@ -1,6 +1,6 @@
-﻿# Script to apply Full Access permission of one user to every mailbox in Exchange
+﻿# Script to apply Send on behalf of for one user to every mailbox in Exchange
 # Done for Eco SUperfoods
-# WARNING: THIS WILL PROVIDE FULL ACCESS TO EVERYONE FOR THIS ONE USER
+# WARNING: THIS WILL ADD THE USER TO SEND ON BEHALF OF FOR ALL USERS
 
 Function globalSendOnBehalf {
     Param($email)
