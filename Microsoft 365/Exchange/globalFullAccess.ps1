@@ -1,5 +1,4 @@
 ﻿# Script to apply Full Access permission of one user to every mailbox in Exchange
-# Done for Eco SUperfoods
 # WARNING: THIS WILL PROVIDE FULL ACCESS TO EVERYONE FOR THIS ONE USER
 
 Function globalFullAccess {
