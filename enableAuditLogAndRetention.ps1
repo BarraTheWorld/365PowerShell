@@ -5,6 +5,8 @@ $globalCred = Get-Credential
 exchangeLogin
 securityLogin
 
+#CHANGES MADE
+
 Function exchangeLogin {
     write-host "Connecting to Exchange online...."
     try {
