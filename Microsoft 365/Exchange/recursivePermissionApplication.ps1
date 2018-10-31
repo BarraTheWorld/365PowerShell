@@ -19,16 +19,23 @@ foreach ($mailbox in $mailboxList){
 function getFullPermissions { #Checks that each user has the correct access
 foreach ($mailbox in $mailboxList){
 
-   Get-MailboxPermission $mailbox.PrimarySmtpAddress | Where-Object -Property User -Match $domainExt | Select-Object @{Label="Mailbox";Expression={($mailbox.PrimarySMTPAddress)}}, User, AccessRights | Out-GridView
+   Get-MailboxPermission $mailbox.PrimarySmtpAddress | Where-Object -Property User -Match $domainExt | Select-Object @{Label="Mailbox";Expression={($mailbox.PrimarySMTPAddress)}}, User, AccessRights
 }
                         }
 
 function getSendAsPermissions { #Checks that each user has the correct permissions
 foreach ($mailbox in $mailboxList){
 
-   Get-RecipientPermission $mailbox.PrimarySmtpAddress | Where-Object -Property Trustee -Match $domainExt | Select-Object Identity, Trustee, AccessRights | Out-GridView
+   Get-RecipientPermission $mailbox.PrimarySmtpAddress | Where-Object -Property Trustee -Match $domainExt | Select-Object Identity, Trustee, AccessRights
 }
                             }
+
+function getFullCalendarPermissions { #Checks that each user has the correct access
+foreach ($mailbox in $mailboxList){
+
+   Get-MailboxPermission $mailbox.PrimarySmtpAddress:\Calendar | Where-Object -Property User -Match $domainExt | Select-Object @{Label="Calendar";Expression={($mailbox.PrimarySMTPAddress)}}, User, AccessRights
+}
+                        }
 
 function removePermissionsStatic { #Remove permissions based on a single mailbox for each user
 foreach ($mailbox in $mailboxList){
