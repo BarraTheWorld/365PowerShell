@@ -1,0 +1,1 @@
+﻿Get-MailboxStatistics Rentals | Select-Object DisplayName, ItemCount, TotalItemSize, MessageTableTotalSize, AttachmentTableTotalSize | Export-Csv RentalsMailboxStats2.Csv
