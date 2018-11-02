@@ -19,7 +19,7 @@ foreach ($mailbox in $mailboxList){
 function getFullPermissions { #Checks that each user has the correct access
 foreach ($mailbox in $mailboxList){
 
-   Get-MailboxPermission $mailbox.PrimarySmtpAddress | Where-Object -Property User -Match $domainExt | Select-Object @{Label="Mailbox";Expression={($mailbox.PrimarySMTPAddress)}}, User, AccessRights
+   Get-MailboxPermission $mailbox.PrimarySmtpAddress | Where-Object -Property User -Match $domainExt | Select-Object @{Label="Mailbox";Expression={($mailbox.PrimarySMTPAddress)}}, User, AccessRights | Out-GridView
 }
                         }
 
@@ -33,21 +33,21 @@ foreach ($mailbox in $mailboxList){
 function getFullCalendarPermissions { #Checks that each user has the correct access
 foreach ($mailbox in $mailboxList){
 
-   Get-MailboxPermission $mailbox.PrimarySmtpAddress:\Calendar | Where-Object -Property User -Match $domainExt | Select-Object @{Label="Calendar";Expression={($mailbox.PrimarySMTPAddress)}}, User, AccessRights
+   Get-MailboxFolderPermission $mailbox.PrimarySmtpAddressCalendar | Where-Object -Property User -Match $domainExt | Select-Object @{Label="Calendar";Expression={($mailbox.PrimarySMTPAddress)}}, User, AccessRights
 }
                         }
 
 function removePermissionsStatic { #Remove permissions based on a single mailbox for each user
 foreach ($mailbox in $mailboxList){
  
-   Remove-MailboxPermission -Identity rentals@hirrr.com.au -User "$mailbox"
+   Remove-MailboxPermission -Identity rentals@everything.com.au -User "$mailbox"
 }
                                  }
 
 function addPermissionsStatic { #Add permissions based on a single mailbox for each user
 foreach ($mailbox in $mailboxList){
 
-   Add-MailboxPermission -Identity rentals@hirr.com.au -User "$mailbox" -AccessRights FullAccess -AutoMapping:$false
+   Add-MailboxPermission -Identity rentals@everything.com.au -User "$mailbox" -AccessRights FullAccess -AutoMapping:$false
 }
                               }
 
