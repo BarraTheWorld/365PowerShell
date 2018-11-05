@@ -1,4 +1,9 @@
-Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
+try { 
+    Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
+} catch {
+    Install-Module Microsoft.Online.SharePoint.PowerShell -Force
+    Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
+}
 
 try { 
     import-module msonline
@@ -120,3 +125,16 @@ Function connectAll {
     skypeLogin
     azureLogin
 }
+
+Import-Module Microsoft.Exchange.Management.ExoPowershellModule
+
+Get-PSRepository
+
+Find-Module "*exchange*"| Select-Object name
+
+Connect-MsolService
+Connect-AzureAD
+Connect-AzureRmAccount
+Connect-SPOService
+
+#http://aka.ms/exopspreview Where to download Connect-EXOPssession
