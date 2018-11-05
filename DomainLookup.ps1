@@ -1,4 +1,17 @@
-﻿Function dnsLookup {
+﻿# -------------------------------------------------------------
+# DNS lookup script
+#
+# DomainLookup.ps1
+# dnsLookup {}
+#
+# Author: J Shand & B Western
+# Version: 1.0
+# 
+# This script ill provide the DNS records for the given domain
+#
+# -------------------------------------------------------------
+
+Function dnsLookup {
 
 $domain = Read-Host "Please enter domain to get records for: "
 $file = "${env:\userprofile}\Documents\DNS_$domain.txt"

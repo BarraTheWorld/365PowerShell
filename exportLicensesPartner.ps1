@@ -1,6 +1,6 @@
 ﻿$delegatedTenantIds = Get-MsolPartnerContract -All
 
-foreach ($delegatedTenantId in $delegatedTenantIds) {
+$results = foreach ($delegatedTenantId in $delegatedTenantIds) {
 
 $tenantLicenses = Get-MsolAccountSku -TenantId $delegatedTenantId.TenantId
 $tenantDomains = Get-MsolDomain -TenantId $delegatedTenantId.TenantId
