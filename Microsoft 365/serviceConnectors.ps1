@@ -1,3 +1,15 @@
+# -------------------------------------------------------------
+# Main Service Connectors Script
+#
+# serviceConnectors.ps1
+#
+# Author: J Shand & B Western
+# Version: All of them
+# 
+# 
+#
+# -------------------------------------------------------------
+
 try { 
     Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
 } catch {
@@ -59,17 +71,6 @@ Function adminLogin {
     }
 }
 
-# Connect to Teams service using given credential
-Function teamsLogin {
-    write-host "Connecting to Teams Service...."
-    try{
-        Connect-MicrosoftTeams -credential $globalCred | Out-Null
-        Write-Host -ForegroundColor Green "Successfully connected to Teams service!"
-    } catch {
-        Write-Host -ForegroundColor Red "Failed to connect to Microsoft Teams service!"
-    }
-}
-
 # Connect to Sharepoint Online Service using given credentials
 Function sharepointLogin{
     write-host "Connecting to Sharepoint online...."
@@ -91,19 +92,6 @@ Function securityLogin {
    } catch {
        write-host -ForegroundColor red "Failed to connect to eO365 Security and Compliance Center"
    }
-}
-# Connect to Skype for Business Online Portal using given credentials
-# CMDLet not working yet
-Function skypeLogin {
-    write-host "Connecting to Skype for Business online...."
-    try {
-        Connect-MsolService -Credential $globalCred
-        $skypeSession = New-csonlinesession -credential $globalCred
-        Import-PSSession $skypeSession | Out-Null
-        write-host -ForegroundColor green "Successfully connected to Skype for Business Online Services"
-    } catch {
-        write-host -ForegroundColor red "Failed to connect Skype for Business Online Services"
-    }  
 }
 
 Function azureLogin {
@@ -136,5 +124,3 @@ Connect-MsolService
 Connect-AzureAD
 Connect-AzureRmAccount
 Connect-SPOService
-
-#http://aka.ms/exopspreview Where to download Connect-EXOPssession

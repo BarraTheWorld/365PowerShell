@@ -7,7 +7,7 @@
 # Author: J Shand & B Western
 # Version: 1.0
 # 
-# This script ill provide the DNS records for the given domain
+# This script will provide the DNS records for the given domain
 #
 # -------------------------------------------------------------
 
