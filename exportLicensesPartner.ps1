@@ -9,7 +9,13 @@ $tenantDomains = Get-MsolDomain -TenantId $delegatedTenantId.TenantId
             Write-host 
             Write-Host "Tenant Name: $($delegatedTenantId.Name)" -foregroundColor Yellow
             Write-Host
-            Write-Host "Tenant Domains" $($tenantDomains.Name) -ForegroundColor Yellow
+
+            foreach ($tenantDomain in $tenantDomains) {
+
+            Write-Host "Tenant Domains" $($tenantDomain.Name) -ForegroundColor Yellow
+            
+            
+                                                       }
             write-host
             
 
@@ -22,7 +28,7 @@ $tenantDomains = Get-MsolDomain -TenantId $delegatedTenantId.TenantId
             Write-host "Consumed Units:" $($tenantLicense.ConsumedUnits)  -foregroundColor Cyan
             Write-host "****************" -foregroundcolor Yellow
 
-            }
+                                                    }
 
 
 }
