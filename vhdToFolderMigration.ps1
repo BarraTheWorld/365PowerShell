@@ -8,15 +8,19 @@ $vhdName = Get-ChildItem | Where-Object -Property Name -Match ".vhdx" | Get-VHD 
 
 function createFolders {
 
-Mount-VHD -Path $vhdName.Path
+#Mount-VHD -Path $vhdName.Path
 
 foreach ($vhdNames in $vhdName) {
 
-$changedVhdName = $vhdNames
+$changedVhdName = ($vhdNames.Path).remove(0,3)
 
-$changedVhdName = $changedVhdName -replace '[@{}Path=c:\\.vhdx]'
 
-New-Item -ItemType Directory -Path $changedVhdName
+
+$vhdNames.Path
+$changedVhdName
+$changevhdName.Length
+
+#New-Item -ItemType Directory -Path $changedVhdName
 
 }
                         }
