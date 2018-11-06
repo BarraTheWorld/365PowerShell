@@ -1,4 +1,29 @@
-﻿#New-VHD -Path "C:\test2.vhdx" -Fixed -SizeBytes 3GB
+$string = "C:\uuid324890721309487.vhdx"
+
+$finalDot = $string.LastIndexOf(".")
+
+$finalSlash = $string.LastIndexOf("\") + 1
+
+$stripFrom = $string.Length -5
+$stripFrom
+$string = $string.Remove($finalDot)
+
+$string
+
+$string = $string.Remove(0,$finalSlash)
+
+$string
+
+<# 
+Works as follows:
+- Checks for the final dot (start of extension)
+- Strips up to there
+- Checks for final slash + 1 so it points to the slash
+- Strips from the start to the slash
+#>
+
+
+#New-VHD -Path "C:\test2.vhdx" -Fixed -SizeBytes 3GB
 
 $copyLog = C:\errorvhdcopy.txt
 
