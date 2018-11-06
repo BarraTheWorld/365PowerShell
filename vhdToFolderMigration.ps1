@@ -12,13 +12,12 @@ function createFolders {
 
 foreach ($vhdNames in $vhdName) {
 
-$changedVhdName = ($vhdNames.Path).remove(0,3)
-
-
+$changedVhdName = ($vhdNames.Path).TrimStart("C:\")
+$changedVhdName = ($vhdNames.Path).TrimEnd(".vhdx")
 
 $vhdNames.Path
 $changedVhdName
-$changevhdName.Length
+
 
 #New-Item -ItemType Directory -Path $changedVhdName
 
