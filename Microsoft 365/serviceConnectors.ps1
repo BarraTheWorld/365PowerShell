@@ -10,12 +10,20 @@
 #
 # -------------------------------------------------------------
 
+#--------------------Checks and Installs or Imports Required Modules for Connectors--------------------#
+
+function importInstallModules{
+
+#--------------------Import or Install & Import SharePoint Module--------------------#
+
 try { 
     Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
 } catch {
     Install-Module Microsoft.Online.SharePoint.PowerShell -Force
     Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
 }
+
+#--------------------Import or Install & Import msonline Module--------------------#
 
 try { 
     import-module msonline
@@ -24,12 +32,7 @@ try {
     import-module msonline -Force
 }
 
-try {
-    import-module MicrosoftTeams
-} catch {
-    install-module MicrosoftTeams -Force
-    import-module MicrosoftTeams -Force
-}
+#--------------------Import or Install & Import AzureAD Module--------------------#
 
 try { 
     import-module AzureAD
@@ -38,6 +41,8 @@ try {
     import-module AzureAD -Force
 }
 
+#--------------------Import or Install & Import AzureRM Module--------------------#
+
 try { 
     import-module AzureRM
 } catch {
@@ -45,82 +50,153 @@ try {
     import-module AzureRM -Force
 }
 
-$globalCred = Get-Credential
-$domain = Read-Host "Please enter your domain: "
+}
 
-
+#--------------------Login to Exchange Online--------------------#
 Function exchangeLogin {
+
+    $globalCred = Get-Credential
+
     write-host "Connecting to Exchange online...."
+
     try {
         $exchangeSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/?proxyMethod=RPS -Credential $globalCred -Authentication Basic
         Import-PSSession $exchangeSession | Out-Null
-        write-host -foregroundcolor green "Successfully connected to Exchange online!"
+        Write-Host "Successfully connected to Exchange online!" -ForegroundColor green 
     } catch {
-        write-host -foregroundcolor red "Failed to connect to Exchange online!"
+        Write-Host "Failed to connect to Exchange online!" -ForegroundColor red 
+        Write-Host "Please make sure you entered the correct Credentials" -ForegroundColor Red
     }
+
+    $globalCred = $null
 }
 
-# Connect to O365 admin portal using given credential
-Function adminLogin {
+#--------------------Login to O365 Portal--------------------#
+Function portalLogin {
+
+    $globalCred = Get-Credential
+
     write-host "Connecting to Admin Portal...."
+
     try{
-        Connect-msolservice -credential $globalCred | Out-Null
-        write-host -ForegroundColor green "Successfully connected to O365 Admin Portal!"
+        Connect-MsolService -credential $globalCred | Out-Null
+        Write-Host "Successfully connected to O365 Admin Portal!" -ForegroundColor green
     } catch {
-        write-host -ForegroundColor red "Failed to connect to O365 admin portal!"
+        Write-Host "Failed to connect to O365 admin portal!" -ForegroundColor red 
+        Write-Host "Please make sure you entered the correct Credentials" -ForegroundColor Red
     }
+
+    $globalCred = $null
 }
 
-# Connect to Sharepoint Online Service using given credentials
+#--------------------Login to SharePoint Online--------------------#
 Function sharepointLogin{
-    write-host "Connecting to Sharepoint online...."
-    try {
-        Connect-SPOService -Url https://$domain-admin.sharepoint.com -credential $globalCred | Out-Null
-        Write-Host -ForegroundColor Green "Successfully connected to Sharepoint admin!"
-    } catch {
-        Write-Host -ForegroundColor red "Failed to connect to Sharepoint Admin"
+
+    $globalCred = Get-Credential
+
+    Write-Host "To connect to SharePoint Online Please enter the primary domain for the tenant" -ForegroundColor Yellow
+    Write-Host "Example: https://domain-admin.SharePoint.com Where all we need is 'domain'" -ForegroundColor Yellow
+
+    Write-Host "Please Enter a domain to connect to SharePoint Online" -ForegroundColor Red
+    $domain = $null
+
+    While($domain -eq $null){
+        $domain= Read-Host "Enter a domain name (no prefix or suffix)" | ?{$_-match'^[a-zA-Z\s]+$'}
     }
+    $username = $globalCred.UserName
+    $length = $username.Length
+    
+    $atSymbol = $username.IndexOf("@") + 1
+    $domainStrippedAt = $username.remove(0,$atSymbol)
+    
+    $firstDot = $domainStrippedAt.IndexOf(".")
+    $domainStripped =  $domainStrippedAt.remove($firstDot)
+    
+    if ($domainStripped -eq $domain){
+
+            write-host "Connecting to Sharepoint online...."
+
+            try {
+            Connect-MsolService -credential $globalCred | Out-Null
+            Connect-SPOService -Url https://$domainStripped-admin.sharepoint.com -credential $globalCred | Out-Null
+            Write-Host "Successfully connected to Sharepoint admin!" -ForegroundColor Green
+            } catch {
+            Write-Host "Failed to connect to SharePoint Admin!" -ForegroundColor red 
+            Write-Host "Please make sure you entered the correct Credentials" -ForegroundColor Red
+    }
+
+    $globalCred = $null
+
+        }else{
+
+        Write-Host "Please make sure you have entered the domain correctly" -ForegroundColor Red
+
+        }
+
+    #checks to make sure that domain typed references domain cached in $globalCred 
+
+    #passes domain to script
+
+    #htrows error if anything is wrong at any point
+
+    $globalCred = $null
+
 }
 
+#--------------------Login to Security Centre--------------------#
 Function securityLogin {
+
+    $globalCred = Get-Credential
+
    write-host "Connecting to Security and Compliance Center...."
+
    try {
-        connect-msolservice -credential $globalCred | Out-Null
+        Connect-MsolService -credential $globalCred | Out-Null
         $securitySession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.compliance.protection.outlook.com/powershell-liveid/ -Credential $globalCred -Authentication Basic -AllowRedirection
         Import-PSSession $securitySession | Out-Null
-        write-host -foregroundcolor green "Successfully connected to O365 Security and Compliance Center"
+        Write-Host "Successfully connected to O365 Security and Compliance Center" -ForegroundColor Green
    } catch {
-       write-host -ForegroundColor red "Failed to connect to eO365 Security and Compliance Center"
+        Write-Host "Failed to connect to Security and Compliance Center!" -ForegroundColor red 
+        Write-Host "Please make sure you entered the correct Credentials" -ForegroundColor Red
    }
+
+   $globalCred = $null
 }
 
-Function azureLogin {
+#--------------------Login to Azure Active Directory--------------------#
+Function azureADLogin {
+
+    $globalCred = Get-Credential
+
     write-host "Connecting to Azure AD service...."
+
     try {
+        Connect-MsolService -credential $globalCred | Out-Null
         Connect-AzureAD -Credential $globalCred | Out-Null
-        Write-Host -ForegroundColor green "Successfully connected to the Azure AD service"
+        Write-Host "Successfully connected to the Azure AD service" -ForegroundColor Green
     } catch {
-        Write-Host -ForegroundColor red "Failed to conenct to the Azure AD service"
+        Write-Host "Failed to connect to Azure Active Directory!" -ForegroundColor red 
+        Write-Host "Please make sure you entered the correct Credentials" -ForegroundColor Red
     }
+
+    $globalCred = $null
 }
 
-Function connectAll {
-    exchangeLogin
-    adminLogin
-    teamsLogin
-    sharepointLogin
-    securityLogin
-    skypeLogin
-    azureLogin
+#--------------------Login to Azure Resource Management--------------------#
+Function azureRMLogin {
+
+    $globalCred = Get-Credential
+
+    write-host "Connecting to Azure Resource Management...."
+
+    try {
+        Connect-MsolService -credential $globalCred | Out-Null
+        Connect-AzureRmAccount -Credential $globalCred | Out-Null
+        Write-Host "Successfully connected to the Azure AD service" -ForegroundColor Green
+    } catch {
+        Write-Host "Failed to connect to O365 admin portal!" -ForegroundColor red 
+        Write-Host "Please make sure you entered the correct Credentials" -ForegroundColor Red
+    }
+
+    $globalCred = $null
 }
-
-Import-Module Microsoft.Exchange.Management.ExoPowershellModule
-
-Get-PSRepository
-
-Find-Module "*exchange*"| Select-Object name
-
-Connect-MsolService
-Connect-AzureAD
-Connect-AzureRmAccount
-Connect-SPOService
