@@ -35,3 +35,16 @@ function testVhd{
 Dismount-VHD -Path $VhdName.Path
 Mount-VHD -Path $VhdName.Path
 }
+
+
+#First Stage Migration
+
+#Second Stage Migration
+
+#Final Stage Migration
+
+#Disable Profile Disks
+
+#Log in with Each User
+
+#Rename VHDX Folders to correct names
